@@ -1,7 +1,12 @@
-###Data:
+###User_Data:
   * Credit Card
-    * 
+    * Number
+    * Expiration Date
+    * Security Code 
+    * Name on Card 
   * Shipping Address 
   * Phone Number 
   * Zip Code
-  * 
+  * City
+  * State 
+  * Apartment Number (If applicable) 
