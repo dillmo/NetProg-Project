@@ -4,3 +4,5 @@ Lib/
 Scripts/
 tcl/
 pip-selfcheck.json
+src/server/server/__pycache__/
+src/server/db.sqlite3
