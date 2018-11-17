@@ -26,11 +26,18 @@ def register_user(request):
     }
     return HttpResponseRedirect(reverse('index'))
 
-def addToCart(request, product_id, color, size):
-    my_cart = request.session.push('my_cart', product_id, color, size)
+def addToCart(request, product_id):
+    my_cart = request.session.push('my_cart', product_id)
     context = {}
     return render(request, 'shop/cart.html', context)
+
+def cart(request):
+    context = {
+        'my_cart' = request.session.get('my_cart')
+    }
+    return HttpReponse("cart")
                               
-def checkout(request, name, email, phone, address, apt_num, zip_code, city, state, country, card_num, exp_day, exp_year, cvv):
-    
+def checkout(request):
+    context = {}
+    return render(request, 'shop/checkout_success.html', context)
     
