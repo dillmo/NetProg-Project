@@ -1,6 +1,8 @@
-from django.shortcuts import render
-from django.http      import HttpResponse, HttpResponseRedirect
+from django.shortcuts import render, redirect
+from django.http      import HttpResponse
 from django.urls      import reverse
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import login, authenticate
 
 def index(request):
     context = {}
@@ -9,17 +11,20 @@ def index(request):
 def product(request, product_id):
     return HttpResponse("You're looking at product %s." % product_id)
 
-def login(request):
+def logon(request):
     return HttpResponse("login")
 
+# From https://simpleisbetterthancomplex.com/tutorial/2017/02/18/how-to-create-user-sign-up-view.html
 def register(request):
-    context = {}
-    return render(request, 'shop/register.html', context)
-
-def register_user(request):
-    context = {
-        'email':    request.POST['email'],
-        'username': request.POST['username'],
-        'password': request.POST['password']
-    }
-    return HttpResponseRedirect(reverse('index'))
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            raw_password = form.cleaned_data.get('password1')
+            user = authenticate(username=username, password=raw_password)
+            login(request, user)
+            return redirect('index')
+    else:
+        form = UserCreationForm()
+    return render(request, 'shop/register.html', {'form': form})

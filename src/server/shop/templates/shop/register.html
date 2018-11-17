@@ -1,11 +1,8 @@
-<h1>Register</h1>
-<form action="{% url 'register_user' %}" method="post">
-    {% csrf_token %}
-    <input type="text" name="email" id="email">
-    <label for="email">Email</label>
-    <input type="text" name="username" id="username">
-    <label for="username">Username</label>
-    <input type="password" name="password" id="password">
-    <label for="password">Password</label>
-    <input type="submit" value="Register">
-</form>
+{% block content %}
+ <h2>Register</h2>
+ <form method="post">
+     {% csrf_token %}
+     {{ form.as_p }}
+     <button type="submit">Register</button>
+ </form>
+ {% endblock %}
