@@ -39,5 +39,5 @@ def cart(request):
                               
 def checkout(request):
     context = {}
-    return render(request, 'shop/checkout_success.html', context)
+    return render(request, 'shop/checkout/success.html', context)
     
