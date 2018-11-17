@@ -49,7 +49,7 @@ def checkout(request):
         'card_num':     request.POST['card_num'],
         'exp_day':      request.POST['exp_day'],
         'exp_year':     request.POST['exp_year'],
-        'cvt':          request.POST['cvt']
+        'cvv':          request.POST['cvv']
     }
     return render(request, 'checkout/index.html', context)
     
