@@ -1,1 +1,2 @@
-<p><a href="{% url 'login' %}">Login</a> | <a href="{% url 'register' %}">Register</a></p>
+<p><a href="{% url 'shop:login' %}">Login</a> | <a href="{% url 'shop:register' %}">Register</a> | <a href="{% url 'shop:logout' %}">Logout</a></p>
+{% if user.is_authenticated %}<p>Welcome {{ user.username }}!</p>{% endif %}

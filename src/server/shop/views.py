@@ -11,9 +11,6 @@ def index(request):
 def product(request, product_id):
     return HttpResponse("You're looking at product %s." % product_id)
 
-def logon(request):
-    return HttpResponse("login")
-
 # From https://simpleisbetterthancomplex.com/tutorial/2017/02/18/how-to-create-user-sign-up-view.html
 def register(request):
     if request.method == 'POST':
@@ -24,7 +21,7 @@ def register(request):
             raw_password = form.cleaned_data.get('password1')
             user = authenticate(username=username, password=raw_password)
             login(request, user)
-            return redirect('index')
+            return redirect('shop:index')
     else:
         form = UserCreationForm()
     return render(request, 'shop/register.html', {'form': form})
