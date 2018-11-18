@@ -1,15 +1,30 @@
-from django.shortcuts import render, redirect
-from django.http      import HttpResponse
-from django.urls      import reverse
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth import login, authenticate
+from django.shortcuts            import render, redirect
+from django.http                 import HttpResponse
+from django.urls                 import reverse_lazy
+from django.contrib.auth.forms   import UserCreationForm
+from django.contrib.auth         import login, authenticate
+from django.views.generic.edit   import CreateView
+from django.views.generic.list   import ListView
+from django.views.generic.detail import DetailView
+from shop.models                 import Product
+from django.utils                import timezone
 
-def index(request):
-    context = {}
-    return render(request, 'shop/index.html', context)
+class ProductListView(ListView):
+    model = Product
+    paginate_by = 100
 
-def product(request, product_id):
-    return HttpResponse("You're looking at product %s." % product_id)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['now'] = timezone.now()
+        return context
+
+class ProductDetailView(DetailView):
+    model = Product
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['now'] = timezone.now()
+        return context
 
 # From https://simpleisbetterthancomplex.com/tutorial/2017/02/18/how-to-create-user-sign-up-view.html
 def register(request):
@@ -25,3 +40,8 @@ def register(request):
     else:
         form = UserCreationForm()
     return render(request, 'shop/register.html', {'form': form})
+
+class ProductCreate(CreateView):
+    model = Product
+    fields = ['name', 'price', 'stock']
+    success_url = reverse_lazy('shop:index')

@@ -1,0 +1,11 @@
+<body>
+    <p><a href="{% url 'shop:index' %}">Home</a> | <a href="{% url 'shop:login' %}">Login</a> | <a href="{% url 'shop:register' %}">Register</a> | <a href="{% url 'shop:logout' %}">Logout</a></p>
+    {% if user.is_authenticated %}
+    <p>Welcome {{ user.username }}!</p>
+    <a href="{% url 'shop:create_product' %}">Create a product</a>
+    {% endif %}
+
+    <div id="content">
+        {% block content %}{% endblock %}
+    </div>
+</body>
