@@ -1,5 +1,5 @@
 from django.shortcuts            import render, redirect
-from django.http                 import HttpResponse
+from django.http                 import HttpResponse, JsonResponse
 from django.urls                 import reverse_lazy
 from django.contrib.auth.forms   import UserCreationForm
 from django.contrib.auth         import login, authenticate
@@ -93,6 +93,10 @@ def register(request):
     else:
         form = UserCreationForm()
     return render(request, 'shop/register.html', {'form': form})
+
+def api(request):
+    products = list(Product.objects.values())
+    return JsonResponse(products, safe=0)
 
 class ProductCreate(CreateView):
     model = Product
