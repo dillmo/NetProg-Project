@@ -26,6 +26,59 @@ class ProductDetailView(DetailView):
         context['now'] = timezone.now()
         return context
 
+def add_to_cart(request, pk):
+    if Product.objects.filter(pk=pk).exists():
+        cart = request.session.get('cart', [])
+        if Product.objects.get(pk=pk).stock > cart.count(pk):
+            cart.append(pk)
+            request.session['cart'] = cart
+            return redirect('shop:product_added', pk)
+    return redirect('shop:product_not_found')
+
+def product_added(request, pk):
+    if Product.objects.filter(pk=pk).exists():
+        context = {'name': Product.objects.get(pk=pk).name,}
+        return render(request, 'shop/product_added.html', context)
+    else:
+        return redirect('shop:product_not_found')
+
+def product_not_found(request):
+    return render(request, 'shop/product_not_found.html')
+
+def cart(request):
+    cart = []
+    for pk in request.session.get('cart', []):
+        product = Product.objects.get(pk=pk)
+        price = product.price
+        name = product.name
+        cart.append(f'${price} - {name}')
+    context = {'cart': cart}
+    return render(request, 'shop/cart.html', context)
+
+def checkout(request):
+    if request.method == 'POST':
+        request.session['cart'] = []
+        return redirect('shop:checkout_successful')
+    else:
+        cart = request.session.get('cart')
+        price = 0
+        for pk in cart:
+            product = Product.objects.get(pk=pk)
+            if product.stock > 0:
+                price += product.price
+                product.stock -= 1
+                product.save()
+                if product.stock == 0:
+                    product.delete()
+            else:
+                product.delete()
+                return redirect('shop:out_of_stock')
+        context = {'price': price}
+    return render(request, 'shop/checkout.html', context)
+
+def checkout_successful(request):
+    return render(request, 'shop/checkout_successful.html')
+
 # From https://simpleisbetterthancomplex.com/tutorial/2017/02/18/how-to-create-user-sign-up-view.html
 def register(request):
     if request.method == 'POST':

@@ -4,4 +4,5 @@
 <h1>{{ object.name }}</h1>
 <p>${{ object.price }}</p>
 <p>{{ object.stock }} in stock</p>
+<p><a href="{% url 'shop:add_to_cart' pk=object.pk %}">Add to Cart</a></p>
 {% endblock %}

@@ -1,0 +1,20 @@
+{% extends 'template_base.html' %}
+
+{% block content %}
+<h1>Checkout</h1>
+<p>Total = {{ price }}</p>
+<form method="post">
+    {% csrf_token %}
+    Credit card number: <input type="number" name="cc_number"><br>
+    Expiration date: <input type="date" name="exp_date"><br>
+    Security code: <input type="number" name="security_code"><br>
+    Name on card: <input type="text" name="name"><br>
+    Address line 1: <input type="text" name="addr_ln_1"><br>
+    Address line 2: <input type="text" name="addr_ln_2"><br>
+    City: <input type="text" name="city"><br>
+    State or province: <input type="text" name="state"><br>
+    Country: <input type="text" name="country"><br>
+    ZIP code: <input type="number" name="zip"><br>
+    <input type="submit" value="Submit">
+</form>
+{% endblock %}
