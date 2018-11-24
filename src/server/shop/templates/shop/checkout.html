@@ -2,7 +2,7 @@
 
 {% block content %}
 <h1>Checkout</h1>
-<p>Total = {{ price }}</p>
+<p id="total">Total = {{ price }}</p>
 <form method="post">
     {% csrf_token %}
     Credit card number: <input type="number" name="cc_number"><br>

@@ -4,7 +4,7 @@
 <h1>Products</h1>
 <ul>
     {% for product in object_list %}
-    <li><a href="{% url 'shop:product' pk=product.pk %}">{{ product.name }} - ${{ product.price }} - {{ product.stock }} in stock</a></li>
+    <li><a href="{% url 'shop:product' pk=product.pk %}" id="product_{{ product.pk }}">{{ product.name }} - ${{ product.price }} - {{ product.stock }} in stock</a></li>
     {% empty %}
     <li>No products in stock</li>
     {% endfor %}

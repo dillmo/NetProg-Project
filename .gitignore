@@ -7,7 +7,6 @@ include/
 lib/
 tcl/
 pip-selfcheck.json
-src/server/server/__pycache__/
+**/__pycache__/
 src/server/db.sqlite3
-src/server/shop/__pycache__/
-src/server/shop/migrations/__pycache__/
+**/geckodriver.log
