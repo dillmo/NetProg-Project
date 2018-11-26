@@ -6,7 +6,6 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 import time
 import requests
-import json
 
 # Wait for the right product to exist
 item_name = 'Cat food'
